@@ -1,6 +1,3 @@
-using BookSellWeb.Data;
-using Microsoft.EntityFrameworkCore;
-
 namespace BookSellWeb
 {
     public class Program
@@ -11,9 +8,6 @@ namespace BookSellWeb
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"))
-            );
 
             var app = builder.Build();
 

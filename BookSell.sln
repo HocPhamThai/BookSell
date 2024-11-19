@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSellWeb", "BookSellWeb\BookSellWeb.csproj", "{7636A604-DDC1-4B3D-9595-F231E73C2866}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSell_Temp", "BookSell_Temp\BookSell_Temp.csproj", "{57EB9AAB-5C40-48BD-8975-5DDE6DC9994F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7636A604-DDC1-4B3D-9595-F231E73C2866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7636A604-DDC1-4B3D-9595-F231E73C2866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7636A604-DDC1-4B3D-9595-F231E73C2866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57EB9AAB-5C40-48BD-8975-5DDE6DC9994F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57EB9AAB-5C40-48BD-8975-5DDE6DC9994F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57EB9AAB-5C40-48BD-8975-5DDE6DC9994F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57EB9AAB-5C40-48BD-8975-5DDE6DC9994F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

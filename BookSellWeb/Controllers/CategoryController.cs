@@ -48,7 +48,7 @@ namespace BookSellWeb.Controllers
                 return View();
             }
 
-            Category categoryFromDb = db.Categories.Find(id);
+            Category? categoryFromDb = db.Categories.Find(id);
             //Category categoryFromDb1 = db.Categories.FirstOrDefault(x => x.Id == id);
             //Category categoryFromDb2 = db.Categories.Where(x => x.Id == id).FirstOrDefault();
 
@@ -79,7 +79,7 @@ namespace BookSellWeb.Controllers
                 return View();
             }
 
-            Category categoryFromDb = db.Categories.Find(id);
+            Category? categoryFromDb = db.Categories.Find(id);
             //Category categoryFromDb1 = db.Categories.FirstOrDefault(x => x.Id == id);
             //Category categoryFromDb2 = db.Categories.Where(x => x.Id == id).FirstOrDefault();
 

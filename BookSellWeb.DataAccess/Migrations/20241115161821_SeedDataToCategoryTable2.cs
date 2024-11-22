@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace BookSellWeb.Migrations
+namespace BookSellWeb.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class SeedDataToCategoryTable2 : Migration

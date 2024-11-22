@@ -1,8 +1,8 @@
-﻿using BookSellWeb.Data;
+﻿using BookSellWeb.DataAccess.Data;
 using BookSellWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookSellWeb.Controllers
+namespace BookSellWeb.DataAccess.Controllers
 {
     public class CategoryController : Controller
     {

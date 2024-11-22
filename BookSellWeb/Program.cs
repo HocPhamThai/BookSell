@@ -1,4 +1,4 @@
-using BookSellWeb.Data;
+using BookSellWeb.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookSellWeb

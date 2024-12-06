@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSellWeb", "BookSellWeb\BookSellWeb.csproj", "{7636A604-DDC1-4B3D-9595-F231E73C2866}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookEcomWeb", "BookSellWeb\BookEcomWeb.csproj", "{7636A604-DDC1-4B3D-9595-F231E73C2866}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSellWeb.DataAccess", "BookSellWeb.DataAccess\BookSellWeb.DataAccess.csproj", "{AFE57FE6-6191-48E7-88EE-988379E64A55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookEcomWeb.DataAccess", "BookSellWeb.DataAccess\BookEcomWeb.DataAccess.csproj", "{AFE57FE6-6191-48E7-88EE-988379E64A55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSellWeb.Utility", "BookSellWeb.Utility\BookSellWeb.Utility.csproj", "{FA37D923-759A-4BFC-AE20-55A5A81720B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookEcomWeb.Utility", "BookSellWeb.Utility\BookEcomWeb.Utility.csproj", "{FA37D923-759A-4BFC-AE20-55A5A81720B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSellWeb.Models", "BookSellWeb.Models\BookSellWeb.Models.csproj", "{66FEB9C7-E786-48C1-8D43-8D2DDB37BD9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookEcomWeb.Models", "BookSellWeb.Models\BookEcomWeb.Models.csproj", "{66FEB9C7-E786-48C1-8D43-8D2DDB37BD9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

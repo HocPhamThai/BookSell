@@ -1,21 +1,21 @@
-﻿using BookSellWeb.DataAccess.Data;
-using BookSellWeb.Models;
+﻿using BookEcomWeb.DataAccess.IRepository;
+using BookEcomWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookSellWeb.DataAccess.Controllers
+namespace BookEcomWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext db;
+        private readonly IUnitOfWork unitOfWork;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            this.unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            var categoryList = db.Categories.ToList();
+            var categoryList = unitOfWork.Category.GetAll().ToList();
             return View(categoryList);
         }
 
@@ -33,8 +33,8 @@ namespace BookSellWeb.DataAccess.Controllers
             }
             if (ModelState.IsValid)
             {
-                db.Categories.Add(obj);
-                db.SaveChanges();
+                unitOfWork.Category.Add(obj);
+                unitOfWork.Save();
                 TempData["success"] = "Category Created Successfully!!!";
                 return RedirectToAction("Index");
             }
@@ -48,7 +48,7 @@ namespace BookSellWeb.DataAccess.Controllers
                 return View();
             }
 
-            Category? categoryFromDb = db.Categories.Find(id);
+            Category? categoryFromDb = unitOfWork.Category.Get(u => u.Id == id);
             //Category categoryFromDb1 = db.Categories.FirstOrDefault(x => x.Id == id);
             //Category categoryFromDb2 = db.Categories.Where(x => x.Id == id).FirstOrDefault();
 
@@ -64,8 +64,8 @@ namespace BookSellWeb.DataAccess.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Update(obj);
-                db.SaveChanges();
+                unitOfWork.Category.Update(obj);
+                unitOfWork.Save();
                 TempData["success"] = "Category Edited Successfully!!!";
                 return RedirectToAction("Index");
             }
@@ -79,7 +79,7 @@ namespace BookSellWeb.DataAccess.Controllers
                 return View();
             }
 
-            Category? categoryFromDb = db.Categories.Find(id);
+            Category? categoryFromDb = unitOfWork.Category.Get(u => u.Id == id);
             //Category categoryFromDb1 = db.Categories.FirstOrDefault(x => x.Id == id);
             //Category categoryFromDb2 = db.Categories.Where(x => x.Id == id).FirstOrDefault();
 
@@ -93,13 +93,13 @@ namespace BookSellWeb.DataAccess.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? obj = db.Categories.Find(id);
+            Category? obj = unitOfWork.Category.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            db.Categories.Remove(obj);
-            db.SaveChanges();
+            unitOfWork.Category.Remove(obj);
+            unitOfWork.Save();
             TempData["success"] = "Category Deleted Successfully!!!";
             return RedirectToAction("Index");
         }

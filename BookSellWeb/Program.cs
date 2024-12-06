@@ -1,7 +1,9 @@
-using BookSellWeb.DataAccess.Data;
+using BookEcomWeb.DataAccess.Data;
+using BookEcomWeb.DataAccess.IRepository;
+using BookEcomWeb.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookSellWeb
+namespace BookEcomWeb
 {
     public class Program
     {
@@ -14,6 +16,7 @@ namespace BookSellWeb
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"))
             );
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 
@@ -34,7 +37,7 @@ namespace BookSellWeb
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

@@ -17,17 +17,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Category\Create.cshtml" />
+    <UpToDateCheckInput Remove="Areas\Admin\Views\Category\Create.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Views\Category\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Category\Create.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BookSellWeb.DataAccess\BookSellWeb.DataAccess.csproj" />
-    <ProjectReference Include="..\BookSellWeb.Models\BookSellWeb.Models.csproj" />
-    <ProjectReference Include="..\BookSellWeb.Utility\BookSellWeb.Utility.csproj" />
+    <ProjectReference Include="..\BookSellWeb.DataAccess\BookEcomWeb.DataAccess.csproj" />
+    <ProjectReference Include="..\BookSellWeb.Models\BookEcomWeb.Models.csproj" />
+    <ProjectReference Include="..\BookSellWeb.Utility\BookEcomWeb.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Customer\Data\" />
+    <Folder Include="Areas\Customer\Models\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

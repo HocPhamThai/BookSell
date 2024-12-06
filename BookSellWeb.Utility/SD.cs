@@ -1,4 +1,4 @@
-﻿namespace BookSellWeb.Utility
+﻿namespace BookEcomWeb.Utility
 {
     public static class SD
     {

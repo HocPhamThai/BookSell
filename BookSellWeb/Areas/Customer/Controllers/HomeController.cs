@@ -1,8 +1,8 @@
-using BookSellWeb.Models;
+using BookEcomWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BookSellWeb.Controllers
+namespace BookEcomWeb.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {

@@ -6,15 +6,15 @@ namespace BookEcomWeb.DataAccess.Repository
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        private ApplicationDbContext db;
+        private ApplicationDbContext _db;
         public CategoryRepository(ApplicationDbContext db) : base(db)
         {
-            this.db = db;
+            _db = db;
         }
 
         public void Update(Category obj)
         {
-            db.Categories.Update(obj);
+            _db.Categories.Update(obj);
         }
     }
 }

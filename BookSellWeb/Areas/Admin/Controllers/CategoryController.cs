@@ -6,16 +6,16 @@ namespace BookEcomWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public CategoryController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            var categoryList = unitOfWork.Category.GetAll().ToList();
+            var categoryList = _unitOfWork.Category.GetAll().ToList();
             return View(categoryList);
         }
 
@@ -33,8 +33,8 @@ namespace BookEcomWeb.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                unitOfWork.Category.Add(obj);
-                unitOfWork.Save();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Created Successfully!!!";
                 return RedirectToAction("Index");
             }
@@ -48,7 +48,7 @@ namespace BookEcomWeb.Areas.Admin.Controllers
                 return View();
             }
 
-            Category? categoryFromDb = unitOfWork.Category.Get(u => u.Id == id);
+            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
             //Category categoryFromDb1 = db.Categories.FirstOrDefault(x => x.Id == id);
             //Category categoryFromDb2 = db.Categories.Where(x => x.Id == id).FirstOrDefault();
 
@@ -64,8 +64,8 @@ namespace BookEcomWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.Category.Update(obj);
-                unitOfWork.Save();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Edited Successfully!!!";
                 return RedirectToAction("Index");
             }
@@ -79,7 +79,7 @@ namespace BookEcomWeb.Areas.Admin.Controllers
                 return View();
             }
 
-            Category? categoryFromDb = unitOfWork.Category.Get(u => u.Id == id);
+            Category? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
             //Category categoryFromDb1 = db.Categories.FirstOrDefault(x => x.Id == id);
             //Category categoryFromDb2 = db.Categories.Where(x => x.Id == id).FirstOrDefault();
 
@@ -93,13 +93,13 @@ namespace BookEcomWeb.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? obj = unitOfWork.Category.Get(u => u.Id == id);
+            Category? obj = _unitOfWork.Category.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            unitOfWork.Category.Remove(obj);
-            unitOfWork.Save();
+            _unitOfWork.Category.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "Category Deleted Successfully!!!";
             return RedirectToAction("Index");
         }

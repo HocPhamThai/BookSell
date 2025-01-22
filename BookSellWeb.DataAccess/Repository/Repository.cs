@@ -29,12 +29,12 @@ namespace BookEcomWeb.DataAccess.Repository
             if (!string.IsNullOrEmpty(inCludeProperties))
             {
                 foreach (var includeProp in
-                    inCludeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
+                    inCludeProperties.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(includeProp);
                 }
             }
-            return query.FirstOrDefault();
+            return query.FirstOrDefault()!;
         }
 
         // Category, CoverType

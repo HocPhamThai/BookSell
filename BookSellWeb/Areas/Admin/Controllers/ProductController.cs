@@ -1,11 +1,15 @@
 ﻿using BookEcomWeb.DataAccess.IRepository;
 using BookEcomWeb.Models;
 using BookEcomWeb.Models.ViewModels;
+using BookEcomWeb.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookEcomWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

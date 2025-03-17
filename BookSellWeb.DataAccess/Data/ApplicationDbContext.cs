@@ -15,6 +15,7 @@ namespace BookEcomWeb.DataAccess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,13 @@ namespace BookEcomWeb.DataAccess.Data
                     new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
                     new Category { Id = 3, Name = "History", DisplayOrder = 3 }
                 );
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company { Id = 1, Name = "Tech Solution", StreetAddress = "123 Tech St", City = "New York", State = "TS", PostalCode = "121212", PhoneNumber = "038999111" },
+                new Company { Id = 2, Name = "Vivide Books", StreetAddress = "999 Viv St", City = "Tokyo", State = "VB", PostalCode = "131313", PhoneNumber = "038999111" },
+                new Company { Id = 3, Name = "Readers Club", StreetAddress = "777 Readers St", City = "Gotham", State = "RC", PostalCode = "141444", PhoneNumber = "038999111" }
+            );
+
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {

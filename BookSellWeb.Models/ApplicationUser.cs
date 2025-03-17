@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookEcomWeb.Models
 {
@@ -10,5 +12,9 @@ namespace BookEcomWeb.Models
         public string? City { get; set; }
         public string? State { get; set; }
         public string? PostalCode { get; set; }
+        public int? CompanyID { get; set; }
+        [ForeignKey("CompanyID")]
+        [ValidateNever]
+        public Company Company { get; set; }
     }
 }

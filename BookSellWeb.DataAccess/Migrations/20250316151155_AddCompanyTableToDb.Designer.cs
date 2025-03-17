@@ -4,16 +4,19 @@ using BookEcomWeb.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BookEcomWeb.Migrations
+namespace BookEcomWeb.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250316151155_AddCompanyTableToDb")]
+    partial class AddCompanyTableToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,38 +95,6 @@ namespace BookEcomWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "New York",
-                            Name = "Tech Solution",
-                            PhoneNumber = "038999111",
-                            PostalCode = "121212",
-                            State = "TS",
-                            StreetAddress = "123 Tech St"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Tokyo",
-                            Name = "Vivide Books",
-                            PhoneNumber = "038999111",
-                            PostalCode = "131313",
-                            State = "VB",
-                            StreetAddress = "999 Viv St"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Gotham",
-                            Name = "Readers Club",
-                            PhoneNumber = "038999111",
-                            PostalCode = "141444",
-                            State = "RC",
-                            StreetAddress = "777 Readers St"
-                        });
                 });
 
             modelBuilder.Entity("BookEcomWeb.Models.Product", b =>
@@ -476,9 +447,6 @@ namespace BookEcomWeb.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CompanyID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -491,8 +459,6 @@ namespace BookEcomWeb.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("CompanyID");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -557,15 +523,6 @@ namespace BookEcomWeb.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BookEcomWeb.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("BookEcomWeb.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyID");
-
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

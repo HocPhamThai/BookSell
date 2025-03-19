@@ -60,6 +60,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
             }
 
             _unitOfWork.Save();
+            TempData["success"] = "Cart Updated successfully!!!";
 
             return RedirectToAction(nameof(Index));
         }

@@ -1,7 +1,10 @@
 using BookEcomWeb.DataAccess.IRepository;
 using BookEcomWeb.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BookEcomWeb.Areas.Customer.Controllers
 {
@@ -25,8 +28,40 @@ namespace BookEcomWeb.Areas.Customer.Controllers
 
         public IActionResult Details(int productID)
         {
-            Product product = _unitOfWork.Product.Get(u => u.Id == productID, inCludeProperties: "Category");
-            return View(product);
+            ShoppingCart cart = new()
+            {
+                Product = _unitOfWork.Product.Get(u => u.Id == productID, inCludeProperties: "Category"),
+                Count = 1,
+                ProductId = productID
+            };
+            return View(cart);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimIdentity = User.Identity as ClaimsIdentity;
+            var userId = claimIdentity.Claims.First().Value;
+            shoppingCart.ApplicationUserId = userId;
+
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(x => x.ApplicationUserId == userId && x.ProductId == shoppingCart.ProductId);
+
+            if (cartFromDb != null)
+            {
+                // Update Cart from Db
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+            }
+            else
+            {
+                // Add Cart to Db
+                _unitOfWork.ShoppingCart.Add(shoppingCart);
+            }
+
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

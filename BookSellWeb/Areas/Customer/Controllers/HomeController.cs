@@ -42,7 +42,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
         public IActionResult Details(ShoppingCart shoppingCart)
         {
             var claimIdentity = User.Identity as ClaimsIdentity;
-            var userId = claimIdentity.Claims.First().Value;
+            var userId = claimIdentity?.Claims.First().Value;
             shoppingCart.ApplicationUserId = userId;
 
             var cartFromDb = _unitOfWork.ShoppingCart.Get(x => x.ApplicationUserId == userId && x.ProductId == shoppingCart.ProductId);

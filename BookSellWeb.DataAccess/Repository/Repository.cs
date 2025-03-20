@@ -47,9 +47,13 @@ namespace BookEcomWeb.DataAccess.Repository
         }
 
         // Category, CoverType
-        public IEnumerable<T> GetAll(string? inCludeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? inCludeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
             if (!string.IsNullOrEmpty(inCludeProperties))
             {
                 foreach (var includeProp in

@@ -11,6 +11,8 @@ namespace BookEcomWeb.DataAccess.Repository
         public IProductRepository Product { get; private set; }
         public IShoppingCartRepository ShoppingCart { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IOrderHeaderRepository OrderHeaderRepository { get; private set; }
+        public IOrderDetailRepository OrderDetailRepository { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -19,6 +21,8 @@ namespace BookEcomWeb.DataAccess.Repository
             Company = new CompanyRepository(_db);
             ShoppingCart = new ShoppingCartRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
+            OrderHeaderRepository = new OrderHeaderRepository(_db);
+            OrderDetailRepository = new OrderDetailRepository(_db);
         }
 
         public void Save()

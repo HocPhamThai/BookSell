@@ -25,12 +25,13 @@ namespace BookEcomWeb.Areas.Customer.Controllers
             ShoppingCartVM = new()
             {
                 ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, inCludeProperties: "Product"),
+                OrderHeader = new()
             };
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 cart.Price = GetPriceBasedOnQuantity(cart);
-                ShoppingCartVM.OrderTotal += (cart.Count ?? 0) * cart.Price;
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Count ?? 0) * cart.Price;
             }
 
             return View(ShoppingCartVM);

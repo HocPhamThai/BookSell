@@ -17,6 +17,8 @@ namespace BookEcomWeb.Areas.Customer.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+
+        // when user click on Cart Icon, it will redirect to Index Page
         public IActionResult Index()
         {
             var claimsIdentity = User.Identity as ClaimsIdentity;
@@ -39,7 +41,36 @@ namespace BookEcomWeb.Areas.Customer.Controllers
 
         public IActionResult Summary()
         {
-            return View();
+            /*
+             B1: Get Application User ID to getAll Shopping Cart List, Include properties: "Product"
+             B2: Create ShoppingVM with OrederHeader
+             B3: Set Data for ShoppingCartVM from ApplicationUser to return to the Summary View 
+             B4: ForEach ShoppingList to Get Cart Price and OrderTotal
+             */
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity.Claims.First().Value;
+
+            ShoppingCartVM = new()
+            {
+                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, inCludeProperties: "Product"),
+                OrderHeader = new()
+            };
+
+            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(x => x.Id == userId);
+
+            ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
+            ShoppingCartVM.OrderHeader.StreetAddress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAddress;
+            ShoppingCartVM.OrderHeader.PhoneNumber = ShoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
+            ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
+            ShoppingCartVM.OrderHeader.State = ShoppingCartVM.OrderHeader.ApplicationUser.State;
+            ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
+
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            {
+                cart.Price = GetPriceBasedOnQuantity(cart);
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Count ?? 0) * cart.Price;
+            }
+            return View(ShoppingCartVM);
         }
 
         // Functionalities for Plus, Minus, Remove, GetPriceBasedOnQuantity

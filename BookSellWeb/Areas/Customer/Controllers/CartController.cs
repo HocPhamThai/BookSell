@@ -1,6 +1,7 @@
 ﻿using BookEcomWeb.DataAccess.IRepository;
 using BookEcomWeb.Models;
 using BookEcomWeb.Models.ViewModels;
+using BookEcomWeb.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -12,6 +13,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        [BindProperty]
         public ShoppingCartVM? ShoppingCartVM { get; set; }
         public CartController(IUnitOfWork unitOfWork)
         {
@@ -70,6 +72,63 @@ namespace BookEcomWeb.Areas.Customer.Controllers
                 cart.Price = GetPriceBasedOnQuantity(cart);
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Count ?? 0) * cart.Price;
             }
+            return View(ShoppingCartVM);
+        }
+
+        [HttpPost]
+        [ActionName("Summary")] 
+        public IActionResult SummaryPOST(ShoppingCartVM )
+        {
+            /*
+             B1: Get Application User ID to getAll Shopping Cart List, Include properties: "Product"
+             B2: Create ShoppingVM with OrederHeader
+             B3: Set Data for ShoppingCartVM from ApplicationUser to return to the Summary View 
+             B4: ForEach ShoppingList to Get Cart Price and OrderTotal
+             */
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity.Claims.First().Value;
+
+            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, inCludeProperties: "Product");
+
+            ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
+            ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
+            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(x => x.Id == userId);
+
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            {
+                cart.Price = GetPriceBasedOnQuantity(cart);
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Count ?? 0) * cart.Price;
+            }
+
+            if (ShoppingCartVM.OrderHeader.ApplicationUser.CompanyID.GetValueOrDefault() == 0)
+            {
+                // it is a regular customer account and we need to capture payment
+                ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
+                ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
+            }
+            else
+            {
+                // it is a company account
+                ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
+                ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
+            }
+
+            // Create Order Detail here
+            _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
+            _unitOfWork.Save();
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            {
+                OrderDetail orderDetail = new()
+                {
+                    ProductId = cart.ProductId,
+                    OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
+                    Price = cart.Price,
+                    Count = (int) cart.Count,
+                };
+                _unitOfWork.OrderDetail.Add(orderDetail);
+                _unitOfWork.Save();
+            }
+
             return View(ShoppingCartVM);
         }
 

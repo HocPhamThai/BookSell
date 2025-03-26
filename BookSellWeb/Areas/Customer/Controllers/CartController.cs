@@ -77,7 +77,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
 
         [HttpPost]
         [ActionName("Summary")] 
-        public IActionResult SummaryPOST(ShoppingCartVM )
+        public IActionResult SummaryPOST()
         {
             /*
              B1: Get Application User ID to getAll Shopping Cart List, Include properties: "Product"

@@ -92,7 +92,8 @@ namespace BookEcomWeb.Areas.Customer.Controllers
 
             ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
             ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
-            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(x => x.Id == userId);
+            // Do Not Creating navigation Properites here just call it
+            ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(x => x.Id == userId);
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
@@ -100,7 +101,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Count ?? 0) * cart.Price;
             }
 
-            if (ShoppingCartVM.OrderHeader.ApplicationUser.CompanyID.GetValueOrDefault() == 0)
+            if (applicationUser.CompanyID.GetValueOrDefault() == 0)
             {
                 // it is a regular customer account and we need to capture payment
                 ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
@@ -128,8 +129,19 @@ namespace BookEcomWeb.Areas.Customer.Controllers
                 _unitOfWork.OrderDetail.Add(orderDetail);
                 _unitOfWork.Save();
             }
+            
+            if (applicationUser.CompanyID.GetValueOrDefault() == 0)
+            {
+                // it is a regular customer account and we need to capture payment
+                // We will be using stripe to process the payment
+            }
 
-            return View(ShoppingCartVM);
+            return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
+        }
+
+        public IActionResult OrderConfirmation(int? id)
+        {
+            return View(id);
         }
 
         // Functionalities for Plus, Minus, Remove, GetPriceBasedOnQuantity

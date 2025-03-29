@@ -5,6 +5,7 @@ using BookEcomWeb.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 namespace BookEcomWeb
 {
@@ -18,6 +19,8 @@ namespace BookEcomWeb
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             builder.Services.ConfigureApplicationCookie(options =>
@@ -42,6 +45,8 @@ namespace BookEcomWeb
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
             app.UseRouting();
             app.UseAuthentication();

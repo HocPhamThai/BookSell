@@ -186,7 +186,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int? id)
         {
-            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(x => x.Id == id);
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(x => x.Id == id, inCludeProperties: "ApplicationUser");
             if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
             {
                 // this is an order by customer

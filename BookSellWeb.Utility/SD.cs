@@ -11,7 +11,7 @@
         public const string StatusApproved = "Approved";
         public const string StatusInProcess = "InProcess";
         public const string StatusShipped = "Shipped";
-        public const string StatusCancelled = "Cancaelled";
+        public const string StatusCancelled = "Canncelled";
         public const string StatusRefunded = "Refunded";
       
         public const string PaymentStatusPending = "Pending";

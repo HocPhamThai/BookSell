@@ -1,7 +1,9 @@
 using BookEcomWeb.DataAccess.IRepository;
 using BookEcomWeb.Models;
+using BookEcomWeb.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -52,14 +54,16 @@ namespace BookEcomWeb.Areas.Customer.Controllers
                 // Update Cart from Db
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
+                _unitOfWork.Save();
             }
             else
             {
                 // Add Cart to Db
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count());
             }
 
-            _unitOfWork.Save();
             TempData["success"] = "Cart Updated successfully!!!";
 
             return RedirectToAction(nameof(Index));

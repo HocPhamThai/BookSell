@@ -231,10 +231,11 @@ namespace BookEcomWeb.Areas.Customer.Controllers
                 Step 02: if Count > 1 Update Count-- else Remove Count (count <= 1)
                 Step 03: Save the cart
              */
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(c => c.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(c => c.Id == cartId, tracked: true);
             if (cartFromDb.Count <= 1)
             {
                 // Remove Cart 
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
                 _unitOfWork.ShoppingCart.Remove(cartFromDb);
             }
             else
@@ -249,7 +250,9 @@ namespace BookEcomWeb.Areas.Customer.Controllers
 
         public IActionResult Remove(int? cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.Get(c => c.Id == cartId);
+            var cartFromDb = _unitOfWork.ShoppingCart.Get(c => c.Id == cartId, tracked: true);
+            // when remove cart, we need to remove the cart from db and change the count
+            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
             _unitOfWork.ShoppingCart.Remove(cartFromDb);
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));

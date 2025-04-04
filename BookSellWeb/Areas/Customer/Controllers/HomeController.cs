@@ -24,6 +24,19 @@ namespace BookEcomWeb.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
+            var claimIdentity = User.Identity as ClaimsIdentity;
+            Claim? claim = claimIdentity?.Claims.FirstOrDefault();
+
+            if (claim != null)
+            {
+                var count = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == claim.Value).Count();
+                HttpContext.Session.SetInt32(SD.SessionCart, count);
+            }
+            else
+            {
+                HttpContext.Session.SetInt32(SD.SessionCart, 0);
+            }
+            
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(inCludeProperties: "Category");
             return View(productList);
         }
@@ -60,7 +73,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
             {
                 // Add Cart to Db
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
-                _unitOfWork.Save();
+                _unitOfWork.Save(); 
                 HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count());
             }
 

@@ -30,6 +30,11 @@ namespace BookEcomWeb
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
+            builder.Services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = builder.Configuration["Facebook:AppId"];
+                options.AppSecret = builder.Configuration["Facebook:AppSecret"];
+            });
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {

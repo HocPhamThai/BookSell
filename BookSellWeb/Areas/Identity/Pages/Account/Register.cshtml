@@ -60,23 +60,27 @@
                         <label asp-for="Input.PostalCode" class="ms-2 text-muted">PostalCode</label>
                         <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mb-3 col-6">
-                        <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
-                            <option disabled selected>--Select Role--</option>
-                        </select>
-                    </div>
-                    <div class="form-floating mb-3 col-6">
-                        <select asp-for="Input.CompanyID" asp-items="@Model.Input.CompanyList" class="form-select">
-                            <option disabled selected>--Select Company--</option>
-                        </select>
-                    </div>
+                    @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                        <div class="form-floating mb-3 col-6">
+                            <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
+                                <option disabled selected>--Select Role--</option>
+                            </select>
+                        </div>
+                        <div class="form-floating mb-3 col-6">
+                            <select asp-for="Input.CompanyID" asp-items="@Model.Input.CompanyList" class="form-select">
+                                <option disabled selected>--Select Company--</option>
+                            </select>
+                        </div>
+                    }
                     <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
                 </form>
             </div>
-            <div class="col-md-12">
+            @if (!User.IsInRole(SD.Role_Admin) && !User.IsInRole(SD.Role_Employee))
+            {
+                <div class="col-md-12 p-3 text-center">
                 <section class="px-4 pb-4">
-                    <div class="divider-text d-flex">or</div>
-                    <h3 class="">Use another service to register.</h3>
+                    <div class="divider-text d-flex pb-3">or</div>
                         @{
                             if ((Model.ExternalLogins?.Count ?? 0) == 0)
                             {
@@ -103,6 +107,7 @@
                         }
                 </section>
             </div>
+            }
         </div>
     </div>
 </div>
@@ -112,7 +117,7 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         $(document).ready(function() {
-                $("#Input_CompanyID").hide();
+            $("#Input_CompanyID").hide();
             $("#Input_Role").change(function() {
                 var selection = $("#Input_Role Option:Selected").text();
                 if (selection == "Company") {

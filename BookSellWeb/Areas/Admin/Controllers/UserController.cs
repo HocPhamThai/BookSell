@@ -49,10 +49,30 @@ namespace BookEcomWeb.Areas.Admin.Controllers
             return Json(new { data = objUserList });
         }
 
-        [HttpDelete]
-        public IActionResult Delete(int? id)
+        [HttpPost]
+        public IActionResult LockUnlock([FromBody] string? id)
         {
-            return Json(new { success = true, message = "Delete Successfully" });
+            var objFromDb = _dbContext.ApplicationUsers.Where(u => u.Id == id).FirstOrDefault();
+            var message = "";
+            if (objFromDb == null)
+            {
+                return Json(new { success = false, message = "Error while Locking/Unlocking" });
+            }
+
+            if (objFromDb.LockoutEnd != null && objFromDb.LockoutEnd > DateTime.Now)
+            {
+                // user is currently locked and we need to unlock here
+                message = "User UnLocked successfully";
+                objFromDb.LockoutEnd = DateTime.Now;
+            }
+            else
+            {
+                message = "User Locked successfully";
+                objFromDb.LockoutEnd = DateTime.Now.AddYears(1000);
+            }
+
+            _dbContext.SaveChanges();
+            return Json(new { success = true, message = message});
         }
         #endregion
     }

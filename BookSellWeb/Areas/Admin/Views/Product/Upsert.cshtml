@@ -9,7 +9,7 @@
     <div class="card-body bg-white p-4">
         <form method="post" class="row" enctype="multipart/form-data">
             <input asp-for="Product.Id" hidden/>
-            <input asp-for="Product.ImageUrl" hidden/>
+            @* <input asp-for="Product.ImageUrl" hidden/> *@
             <div class="row">
                 <div class="col-10">
                     <div class="border p-3">
@@ -59,10 +59,10 @@
                             <label asp-for="Product.CategoryId" class="ms-2">Category</label>
                             <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                         </div>
-                        <div class="form-floating col-12 py-2">
-                            <input type="file" name="file" class="form-control border-0 shadow" />
-                            <label asp-for="Product.ImageUrl" class="ms-2"></label>
-                        </div>
+                        @* <div class="form-floating col-12 py-2"> *@
+                        @*     <input type="file" name="file" class="form-control border-0 shadow" /> *@
+                        @*     <label asp-for="Product.ImageUrl" class="ms-2"></label> *@
+                        @* </div> *@
                         <div class="row pt-3">
                             <div class="col-6 col-md-3">
                                 @if (Model.Product.Id != 0)
@@ -81,9 +81,9 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <img src="@Model.Product.ImageUrl" width="100%"
-                        style="border-radius: 5px; border: 1px solid #bbb9b9"
-                     />
+                    @* <img src="@Model.Product.ImageUrl" width="100%" *@
+                    @*     style="border-radius: 5px; border: 1px solid #bbb9b9" *@
+                    @*  /> *@
                 </div>
             </div>
             

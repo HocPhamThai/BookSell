@@ -49,7 +49,6 @@ namespace BookEcomWeb.DataAccess.Data
                     Price50 = 85,
                     Price100 = 80,
                     CategoryId = 3,
-                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -63,7 +62,6 @@ namespace BookEcomWeb.DataAccess.Data
                     Price50 = 25,
                     Price100 = 20,
                     CategoryId = 2,
-                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -77,7 +75,6 @@ namespace BookEcomWeb.DataAccess.Data
                     Price50 = 40,
                     Price100 = 35,
                     CategoryId = 1,
-                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -91,7 +88,6 @@ namespace BookEcomWeb.DataAccess.Data
                     Price50 = 60,
                     Price100 = 55,
                     CategoryId = 3,
-                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -105,7 +101,6 @@ namespace BookEcomWeb.DataAccess.Data
                     Price50 = 25,
                     Price100 = 20,
                     CategoryId = 1,
-                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -119,7 +114,6 @@ namespace BookEcomWeb.DataAccess.Data
                     Price50 = 22,
                     Price100 = 20,
                     CategoryId = 2,
-                    ImageUrl = ""
                 }
             );
         }

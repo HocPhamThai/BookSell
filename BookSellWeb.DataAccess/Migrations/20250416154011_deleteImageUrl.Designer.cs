@@ -4,16 +4,19 @@ using BookEcomWeb.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BookEcomWeb.Migrations
+namespace BookEcomWeb.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250416154011_deleteImageUrl")]
+    partial class deleteImageUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,28 +354,6 @@ namespace BookEcomWeb.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BookEcomWeb.Models.ProductImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages");
-                });
-
             modelBuilder.Entity("BookEcomWeb.Models.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -673,17 +654,6 @@ namespace BookEcomWeb.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("BookEcomWeb.Models.ProductImage", b =>
-                {
-                    b.HasOne("BookEcomWeb.Models.Product", "Product")
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("BookEcomWeb.Models.ShoppingCart", b =>
                 {
                     b.HasOne("BookEcomWeb.Models.ApplicationUser", "ApplicationUser")
@@ -757,11 +727,6 @@ namespace BookEcomWeb.Migrations
                         .HasForeignKey("CompanyID");
 
                     b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("BookEcomWeb.Models.Product", b =>
-                {
-                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }

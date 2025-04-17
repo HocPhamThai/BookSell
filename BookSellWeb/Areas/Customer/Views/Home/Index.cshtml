@@ -8,7 +8,13 @@
                 <div class="row p-2 mb-3">
                     <div class="col-12 p-1">
                         <div class="card border-0 p-3 shadow border-top border-5 rounded">
-                            @* <img class="card-img-top rounded" src="@product.ImageUrl" alt="Alternate Text" /> *@
+                            @if (product.ProductImages != null && product.ProductImages.Count() > 0)
+                            {
+                                <img class="card-img-top rounded" src="@product.ProductImages.FirstOrDefault().ImageUrl" alt="Alternate Text" />
+                            } else
+                            {
+                                <img src="https://placehold.co/500x600/png" class="card-img-top rounded" />
+                            }
                             <div class="card-body pb-0">
                                 <div class="ps-1">
                                     <p class="card-title h5 text-dark opacity-75 text-uppercase text-center">@product.Title</p>

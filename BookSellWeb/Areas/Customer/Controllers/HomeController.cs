@@ -24,7 +24,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
 
         public IActionResult Index()
         {   
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(inCludeProperties: "Category");
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(inCludeProperties: "Category,ProductImages");
             return View(productList);
         }
 
@@ -32,7 +32,7 @@ namespace BookEcomWeb.Areas.Customer.Controllers
         {
             ShoppingCart cart = new()
             {
-                Product = _unitOfWork.Product.Get(u => u.Id == productID, inCludeProperties: "Category"),
+                Product = _unitOfWork.Product.Get(u => u.Id == productID, inCludeProperties: "Category,ProductImages"),
                 Count = 1,
                 ProductId = productID
             };

@@ -26,6 +26,7 @@ namespace BookEcomWeb.DataAccess.Repository
                 objFromDb.Price100 = obj.Price100;
                 objFromDb.Author = obj.Author;
                 objFromDb.CategoryId = obj.CategoryId;
+                objFromDb.ProductImages = obj.ProductImages;
                 //if (obj.ImageUrl != null)
                 //{
                 //    objFromDb.ImageUrl = obj.ImageUrl;
